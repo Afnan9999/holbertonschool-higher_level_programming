@@ -17,7 +17,7 @@ def matrix_divided(matrix, div):
         div (int or float): The divisor; must not be zero.
 
     Returns:
-        new_matrix (list of lists of float): New matrix with divided elements.
+        list of lists of float: New matrix with divided elements.
     """
     # Validate div
     if not isinstance(div, (int, float)):
@@ -27,10 +27,12 @@ def matrix_divided(matrix, div):
 
     # Validate matrix structure
     if (not isinstance(matrix, list) or
-            any(not isinstance(row, list) for row in matrix) or
-            len(matrix) == 0 or
-            any(len(row) == 0 for row in matrix)):
-        raise TypeError("matrix must be a matrix (list of lists) of integers/floats")
+        any(not isinstance(row, list) for row in matrix) or
+        len(matrix) == 0 or
+        any(len(row) == 0 for row in matrix)):
+        raise TypeError(
+            "matrix must be a matrix (list of lists) of integers/floats"
+        )
 
     row_length = len(matrix[0])
     for row in matrix:
@@ -38,9 +40,14 @@ def matrix_divided(matrix, div):
             raise TypeError("Each row of the matrix must have the same size")
         for element in row:
             if not isinstance(element, (int, float)):
-                raise TypeError("matrix must be a matrix (list of lists) of integers/floats")
+                raise TypeError(
+                    "matrix must be a matrix (list of lists) of integers/floats"
+                )
 
-    # Perform division
-    new_matrix = [[round(element / div, 2) for element in row] for row in matrix]
+    # Perform division and round to 2 decimal places
+    new_matrix = [
+        [round(element / div, 2) for element in row]
+        for row in matrix
+    ]
 
     return new_matrix
