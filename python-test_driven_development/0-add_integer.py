@@ -28,4 +28,3 @@ def add_integer(a, b=98):
                 raise TypeError(f"{name} must be an integer")
 
     return int(a) + int(b)
-
