@@ -1,37 +1,37 @@
 #!/usr/bin/python3
 """
-This module defines a function that divides all elements of a matrix
-by a given divisor. It validates that the matrix is a list of lists
-containing only integers or floats, that each row is the same size,
-and that the divisor is a non-zero number. Returns a new matrix with
-all elements divided and rounded to 2 decimal places.
+This module provides a function that divides all elements of a matrix.
 """
 
 
-def matrix_divided(matrix, div):
+def matrix_divided(matrix=None, div=None):
     """
-    Divide all elements of a matrix by div.
-
-    Args:
-        matrix (list of lists of int/float): The matrix to divide.
-        div (int or float): The divisor; must not be zero.
+    Divides all elements of a matrix by a given number.
 
     Returns:
-        list of lists of float: New matrix with divided elements.
-    """
-    # Validate div
-    if not isinstance(div, (int, float)):
-        raise TypeError("div must be a number")
-    if div == 0:
-        raise ZeroDivisionError("division by zero")
+        A new matrix with elements divided by div, rounded to 2 decimals.
 
-    # Validate matrix structure
-    if (not isinstance(matrix, list) or
-        any(not isinstance(row, list) for row in matrix) or
-        len(matrix) == 0 or
-        any(len(row) == 0 for row in matrix)):
+    Raises:
+        TypeError, ZeroDivisionError
+    """
+    if matrix is None or div is None:
         raise TypeError(
-            "matrix must be a matrix (list of lists) of integers/floats"
+            "matrix_divided() missing required arguments "
+            + "'matrix' and/or 'div'"
+        )
+
+    if not isinstance(matrix, list) or not all(
+        isinstance(row, list) for row in matrix
+    ):
+        raise TypeError(
+            "matrix must be a matrix (list of lists) of "
+            + "integers/floats"
+        )
+
+    if matrix == [] or any(row == [] for row in matrix):
+        raise TypeError(
+            "matrix must be a matrix (list of lists) of "
+            + "integers/floats"
         )
 
     row_length = len(matrix[0])
@@ -41,13 +41,21 @@ def matrix_divided(matrix, div):
         for element in row:
             if not isinstance(element, (int, float)):
                 raise TypeError(
-                    "matrix must be a matrix (list of lists) of integers/floats"
+                    "matrix must be a matrix (list of lists) of "
+                    + "integers/floats"
                 )
 
-    # Perform division and round to 2 decimal places
-    new_matrix = [
+    if (
+        not isinstance(div, (int, float))
+        or div != div
+        or div in (float('inf'), float('-inf'))
+    ):
+        raise TypeError("div must be a number")
+
+    if div == 0:
+        raise ZeroDivisionError("division by zero")
+
+    return [
         [round(element / div, 2) for element in row]
         for row in matrix
     ]
-
-    return new_matrix
