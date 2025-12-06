@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 """
-Module 3-say_my_name
+Module three_say_my_name
 
-Contains a function that prints a person's full name in a formatted way.
+Contains a function that prints a person's full name.
 """
+
 
 def say_my_name(first_name, last_name=""):
     """
@@ -21,5 +22,4 @@ def say_my_name(first_name, last_name=""):
     if not isinstance(last_name, str):
         raise TypeError("last_name must be a string")
 
-    print(f"My name is {first_name} {last_name}")
-
+    print(f"My name is {first_name} {last_name}".rstrip())
